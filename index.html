@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tài Xỉu + Cổ Phiếu - Game Browser</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>Tài Xỉu & Thị trường Cổ phiếu</h1>
+      <div id="topbar">
+        <div id="account-area">Khách</div>
+        <div id="balance-area"></div>
+        <div id="mode-indicator">DEV MODE</div>
+      </div>
+    </header>
+
+    <nav id="nav">
+      <button data-page="play">Chơi</button>
+      <button data-page="stocks">Cổ phiếu</button>
+      <button data-page="history">Lịch sử</button>
+      <button data-page="admin">Admin</button>
+    </nav>
+
+    <main id="main">
+      <!-- PLAY PAGE -->
+      <section id="page-play" class="page">
+        <div class="centered">
+          <div class="game-card">
+            <div class="game-top">
+              <div class="side-info" id="player-info-area">
+                <h3>Tài khoản</h3>
+                <div id="player-info">Chưa đăng nhập</div>
+                <div id="player-actions">
+                  <button id="btn-login">Đăng nhập / ĐK</button>
+                  <button id="btn-topup">Nạp tiền</button>
+                </div>
+              </div>
+
+              <div class="play-area">
+                <h2>Trò chơi Tài Xỉu</h2>
+                <div id="bowl" class="bowl covered" title="Bấm để mở chén sau khi xúc">
+                  <div id="dice" class="dice">
+                    <div class="die" id="die1">?</div>
+                    <div class="die" id="die2">?</div>
+                    <div class="die" id="die3">?</div>
+                  </div>
+                  <div id="bowl-cover" class="bowl-cover"></div>
+                </div>
+
+                <div class="controls">
+                  <div class="bets" id="bet-buttons">
+                    <button data-value="20000">20k</button>
+                    <button data-value="50000">50k</button>
+                    <button data-value="100000">100k</button>
+                    <button data-value="200000">200k</button>
+                    <button data-value="500000">500k</button>
+                  </div>
+                  <div class="bet-choices">
+                    <button id="bet-tai" class="choice">Đặt TÀI</button>
+                    <button id="bet-xiu" class="choice">Đặt XỈU</button>
+                  </div>
+                  <div id="round-timer">Thời gian xúc: <span id="timer">00:00</span></div>
+                  <div id="messages" class="messages"></div>
+                </div>
+              </div>
+
+              <div class="side-info" id="ai-info-area">
+                <h3>AI (Nhà cái & Người chơi)</h3>
+                <div id="ai-list"></div>
+                <div id="banker-info"></div>
+              </div>
+            </div>
+
+            <div class="game-bottom">
+              <div id="totals">
+                <div>Ng chơi: <span id="player-total">0 đ</span></div>
+                <div>Nhà cái: <span id="banker-total">0 đ</span></div>
+              </div>
+              <div id="roll-actions">
+                <button id="btn-start-round">Bắt đầu vòng (nếu chưa)</button>
+                <button id="btn-reset-local">Reset dữ liệu demo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STOCKS PAGE -->
+      <section id="page-stocks" class="page hidden">
+        <div class="centered">
+          <div class="stocks-card">
+            <div id="stock-chart-wrapper">
+              <div id="stock-header" class="stock-header">
+                <div id="stock-title">Chọn cổ phiếu</div>
+                <div id="stock-summary">
+                  <span id="stock-price">-</span>
+                  <span id="stock-change">-</span>
+                  <span id="stock-percent">-</span>
+                  <span id="stock-vol">Vol: -</span>
+                </div>
+              </div>
+              <div id="stock-chart" style="height:360px;"></div>
+              <div id="stock-volume" style="height:120px;"></div>
+            </div>
+
+            <div class="stock-controls">
+              <div class="stock-list">
+                <table id="stock-table">
+                  <thead><tr><th>Mã</th><th>Giá</th><th>Còn</th><th>Thay đổi</th><th></th></tr></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+
+              <div class="stock-actions">
+                <h3>Mua cổ phiếu</h3>
+                <div id="selected-stock">Chưa chọn</div>
+                <label>Số lượng (>=30): <input id="buy-qty" type="number" min="30" value="30" /></label>
+                <button id="buy-btn">Mua</button>
+
+                <h3>Bán sở hữu</h3>
+                <div id="owned-list">Đăng nhập để xem</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HISTORY PAGE -->
+      <section id="page-history" class="page hidden">
+        <div class="centered">
+          <div class="history-card">
+            <h2>Lịch sử giao dịch</h2>
+            <div id="history-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ADMIN PAGE (ẩn) -->
+      <section id="page-admin" class="page hidden">
+        <div class="centered">
+          <div class="admin-card">
+            <h2>Admin (ẩn)</h2>
+            <div id="admin-secret-hint">Gõ chuỗi bí mật để mở (ẩn)</div>
+
+            <div id="admin-panel" class="hidden">
+              <div id="admin-login-area">
+                <label>Pass1: <input id="admin-pass1" type="password" /></label>
+                <label>Pass2: <input id="admin-pass2" type="password" /></label>
+                <button id="admin-enter">Vào Admin</button>
+              </div>
+
+              <div id="admin-controls" class="hidden">
+                <h3>Tạo mã nạp (<=200k)</h3>
+                <input id="admin-code" placeholder="code" />
+                <input id="admin-code-value" type="number" placeholder="giá trị" />
+                <input id="admin-code-days" type="number" value="7" /> ngày
+                <button id="admin-create-code">Tạo</button>
+                <h3>Huỷ mã</h3>
+                <input id="admin-cancel-code" placeholder="code" />
+                <button id="admin-cancel-btn">Huỷ</button>
+                <h3>Quản lý cổ phiếu</h3>
+                <input id="admin-stock-symbol" placeholder="Mã CP" />
+                <button id="admin-inc">Tăng giá</button>
+                <button id="admin-dec">Giảm giá</button>
+                <button id="admin-bankrupt">Phá sản (trừ 200M cho holders)</button>
+                <h3>Trợ lý AI Admin</h3>
+                <div id="assistant-panel">Trợ lý AI (demo): sẽ hiển thị cảnh báo bất thường</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+      <small>Demo client-only — Dữ liệu lưu localStorage. Xem README để biết cách đổi thời gian.</small>
+    </footer>
+  </div>
+
+  <!-- Sound -->
+  <audio id="sound-bowl" src="assets/bowl-open.mp3" preload="auto"></audio>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
