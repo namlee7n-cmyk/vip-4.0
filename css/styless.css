@@ -1,45 +1,85 @@
 :root{
-  --bg1:#071521; --card:#0b1220; --accent:#1e90ff; --success:#26a69a; --danger:#ef5350; --text:#e6eef8;
+  --bg-1: #071521;
+  --bg-2: #021018;
+  --card: #07182a;
+  --muted: rgba(255,255,255,0.06);
+  --accent: #00bcd4;
+  --accent-2: #6dd3ff;
+  --success: #26a69a;
+  --danger: #ef5350;
+  --text: #e6eef8;
+  --glass: rgba(255,255,255,0.03);
+  --radius: 12px;
+  --shadow: 0 10px 30px rgba(2,6,12,0.6);
+  --max-width: 1200px;
+  --nav-height: 60px;
 }
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Arial;background:linear-gradient(180deg,#071521,#021018);color:var(--text)}
-header{display:flex;justify-content:space-between;align-items:center;padding:12px 20px}
-h1{margin:0;font-size:20px}
-#nav{display:flex;gap:8px;padding:8px 20px}
-#nav button{background:var(--card);border:1px solid rgba(255,255,255,0.04);color:var(--text);padding:8px 12px;border-radius:6px}
-main{padding:16px}
-.centered{max-width:1100px;margin:0 auto}
-.game-card,.stocks-card,.history-card,.admin-card{background:rgba(255,255,255,0.02);padding:14px;border-radius:10px}
-.game-top{display:flex;gap:12px;align-items:flex-start}
-.side-info{width:220px;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px}
-.play-area{flex:1;padding:8px}
-.bowl{position:relative;width:420px;height:240px;margin:10px auto;border-radius:12px;background:linear-gradient(180deg,#09202a,#021018);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,0.6)}
-.dice{display:flex;gap:12px}
-.die{width:72px;height:72px;background:#fff;border-radius:8px;color:#111;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700}
-.bowl-cover{position:absolute;left:0;right:0;top:0;bottom:0;background:linear-gradient(180deg,#50393d,#8b6c6f);border-radius:12px;transform-origin:center;transition:transform 0.6s ease}
+html,body{height:100%;margin:0;font-family:Inter, "Segoe UI", Roboto, Arial; background:linear-gradient(180deg,var(--bg-1),var(--bg-2)); color:var(--text); -webkit-font-smoothing:antialiased;}
+body{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow:hidden}
+
+/* Header */
+header{
+  width:100%; max-width:var(--max-width); margin-top:18px; display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-radius:10px;
+}
+h1{margin:0;font-size:20px;font-weight:700;color:var(--accent-2)}
+#topbar{display:flex;gap:12px;align-items:center;font-size:14px;color:var(--text)}
+
+/* Nav as pill buttons */
+#nav{width:100%; max-width:var(--max-width); display:flex;gap:10px;padding:10px;border-radius:10px;justify-content:center}
+#nav button{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); border:none; color:var(--text); padding:10px 16px; border-radius:999px; cursor:pointer; transition:all .18s; box-shadow:var(--shadow)}
+#nav button:hover{transform:translateY(-3px); box-shadow:0 18px 34px rgba(0,0,0,0.6)}
+#nav button.active{background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#012; font-weight:700}
+
+/* Main area - make pages full viewport card centered */
+main{width:100%; max-width:var(--max-width); flex:1; display:flex; align-items:center; justify-content:center; padding:18px; overflow:hidden}
+.page{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; transition:opacity .25s ease, transform .25s ease; opacity:0; pointer-events:none;}
+.page.visible{opacity:1; pointer-events:auto; transform:translateY(0)}
+.page.hidden{transform:translateY(12px)}
+/* card inside page to limit width and center content */
+.page .card{width:100%; max-width:1100px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:12px}
+
+/* layout inside card */
+.game-top{display:flex; gap:14px; align-items:flex-start}
+.side-info{width:240px; min-width:200px; background:var(--glass); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.02)}
+.play-area{flex:1; padding:6px}
+
+/* bowl visual */
+.bowl{position:relative;border-radius:12px; background:linear-gradient(180deg,#081f26,#021018); width:520px; height:300px; display:flex; align-items:center; justify-content:center; margin:6px auto}
+.dice{display:flex; gap:14px}
+.die{width:80px; height:80px; background:#fff; color:#111; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:34px; font-weight:800}
+.bowl-cover{position:absolute; left:0; right:0; top:0; bottom:0; border-radius:12px; background: linear-gradient(180deg,#7f5e63,#b3898d); transform-origin:center; transition:transform .6s cubic-bezier(.2,.9,.3,1)}
 .bowl.covered .bowl-cover{transform:translateY(0)}
-.bowl.uncovered .bowl-cover{transform:translateY(140%)}
-.controls{margin-top:12px;text-align:center}
-.bets button{margin:6px;padding:6px 10px}
-.choice{margin:8px;padding:8px 14px;background:var(--accent);border:none;color:#fff;border-radius:6px}
-.messages{margin-top:8px;color:#ffd}
-.game-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
-#stock-chart-wrapper{background:linear-gradient(180deg,#071521,#071827);padding:12px;border-radius:8px;margin-bottom:12px}
-.stock-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:var(--text)}
-#stock-title{font-size:18px;font-weight:700}
-#stock-summary span{margin-left:12px;font-size:14px}
-.stock-controls{display:flex;gap:12px}
+.bowl.uncovered .bowl-cover{transform:translateY(170%)}
+
+/* controls */
+.controls{display:flex; flex-direction:column; gap:10px; align-items:center}
+.bets{display:flex; gap:8px; flex-wrap:wrap; justify-content:center}
+.bets button{background:transparent; border:1px solid var(--muted); padding:8px 10px; border-radius:8px; color:var(--text)}
+.choice{background:linear-gradient(90deg,var(--accent),var(--accent-2)); color:#022; border:none; padding:10px 16px; border-radius:10px}
+
+/* bottom row */
+.game-bottom{display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:8px}
+
+/* Stocks page specifics */
+#stock-chart-wrapper{border-radius:10px; padding:12px; background:linear-gradient(180deg,#071521,#081825); border:1px solid rgba(255,255,255,0.02)}
+.stock-controls{display:flex; gap:12px; align-items:flex-start}
 .stock-list{flex:1}
-.stock-actions{width:320px;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px}
-#stock-table{width:100%;border-collapse:collapse;margin-top:6px}
-#stock-table th,#stock-table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:left}
-.hidden{display:none}
-input,select{padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text)}
-button{cursor:pointer}
-footer{padding:8px 16px;text-align:center;opacity:0.8}
-@media (max-width:900px){
+/* table nicer */
+#stock-table{width:100%; border-collapse:collapse}
+#stock-table th, #stock-table td{padding:10px; border-bottom:1px solid rgba(255,255,255,0.03); text-align:left}
+
+/* history & admin card simple style */
+.history-card, .admin-card{padding:12px}
+
+/* responsive */
+@media (max-width:1000px){
   .game-top{flex-direction:column}
   .side-info{width:100%}
-  .stock-controls{flex-direction:column}
-  .stock-actions{width:100%}
+  .bowl{width:380px; height:220px}
+  .die{width:56px;height:56px;font-size:24px}
 }
+
+/* minor helpers */
+.hidden{display:none}
+.center-text{text-align:center}
