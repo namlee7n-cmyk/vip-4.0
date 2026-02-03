@@ -1,0 +1,45 @@
+:root{
+  --bg1:#071521; --card:#0b1220; --accent:#1e90ff; --success:#26a69a; --danger:#ef5350; --text:#e6eef8;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Arial;background:linear-gradient(180deg,#071521,#021018);color:var(--text)}
+header{display:flex;justify-content:space-between;align-items:center;padding:12px 20px}
+h1{margin:0;font-size:20px}
+#nav{display:flex;gap:8px;padding:8px 20px}
+#nav button{background:var(--card);border:1px solid rgba(255,255,255,0.04);color:var(--text);padding:8px 12px;border-radius:6px}
+main{padding:16px}
+.centered{max-width:1100px;margin:0 auto}
+.game-card,.stocks-card,.history-card,.admin-card{background:rgba(255,255,255,0.02);padding:14px;border-radius:10px}
+.game-top{display:flex;gap:12px;align-items:flex-start}
+.side-info{width:220px;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px}
+.play-area{flex:1;padding:8px}
+.bowl{position:relative;width:420px;height:240px;margin:10px auto;border-radius:12px;background:linear-gradient(180deg,#09202a,#021018);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,0.6)}
+.dice{display:flex;gap:12px}
+.die{width:72px;height:72px;background:#fff;border-radius:8px;color:#111;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700}
+.bowl-cover{position:absolute;left:0;right:0;top:0;bottom:0;background:linear-gradient(180deg,#50393d,#8b6c6f);border-radius:12px;transform-origin:center;transition:transform 0.6s ease}
+.bowl.covered .bowl-cover{transform:translateY(0)}
+.bowl.uncovered .bowl-cover{transform:translateY(140%)}
+.controls{margin-top:12px;text-align:center}
+.bets button{margin:6px;padding:6px 10px}
+.choice{margin:8px;padding:8px 14px;background:var(--accent);border:none;color:#fff;border-radius:6px}
+.messages{margin-top:8px;color:#ffd}
+.game-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+#stock-chart-wrapper{background:linear-gradient(180deg,#071521,#071827);padding:12px;border-radius:8px;margin-bottom:12px}
+.stock-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:var(--text)}
+#stock-title{font-size:18px;font-weight:700}
+#stock-summary span{margin-left:12px;font-size:14px}
+.stock-controls{display:flex;gap:12px}
+.stock-list{flex:1}
+.stock-actions{width:320px;background:rgba(255,255,255,0.02);padding:10px;border-radius:8px}
+#stock-table{width:100%;border-collapse:collapse;margin-top:6px}
+#stock-table th,#stock-table td{padding:8px;border-bottom:1px solid rgba(255,255,255,0.04);text-align:left}
+.hidden{display:none}
+input,select{padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text)}
+button{cursor:pointer}
+footer{padding:8px 16px;text-align:center;opacity:0.8}
+@media (max-width:900px){
+  .game-top{flex-direction:column}
+  .side-info{width:100%}
+  .stock-controls{flex-direction:column}
+  .stock-actions{width:100%}
+}
