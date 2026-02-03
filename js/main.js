@@ -29,10 +29,32 @@ function renderTop(){
 }
 
 function showPage(name){
-  qsa('.page').forEach(p=>p.classList.add('hidden'));
-  qs('#page-'+name).classList.remove('hidden');
-}
+// thay thế hàm showPage cũ bằng hàm dưới
+function showPage(name){
+ // thay thế hàm showPage cũ bằng hàm dưới
+function showPage(name){
+  // remove active from nav buttons
+  document.querySelectorAll('#nav button').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`#nav button[data-page="${name}"]`);
+  if(btn) btn.classList.add('active');
 
+  // hide all pages, show target with animation classes
+  document.querySelectorAll('.page').forEach(p => {
+    p.classList.remove('visible');
+    p.classList.add('hidden');
+    // small delay allow CSS transition
+    setTimeout(()=> {
+      p.style.zIndex = 0;
+    }, 260);
+  });
+  const target = document.getElementById('page-'+name);
+  if(!target) return;
+  target.classList.remove('hidden');
+  target.classList.add('visible');
+  target.style.zIndex = 10;
+  // make sure page scroll top and no body scrollbar (centered card)
+  window.scrollTo(0,0);
+}
 function initNav(){
   qs('#nav').addEventListener('click', e=>{
     const btn = e.target.closest('button'); if(!btn) return;
